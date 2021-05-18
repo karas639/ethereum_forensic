@@ -2,40 +2,32 @@ import struct
 import re
 import os
 from mmap import ACCESS_READ, mmap
+import pandas as pd
 
-global a
+path = input("write full path: ")
 
-a = input("input file name: ")
-#print(a)
+try:
+    handle = open(path, 'rb+')
+except IOError:
+    print('IOError : File path is invalid')
+    sys.exit()
 
-'''
-f = open(a, 'rb')
-data = f.read()
-f.close()
-'''
-chunk_size = 2**32
-matches = []
-#pattern_group = [b,'^0x[a-fA-F0-9]{40}$']
-p = re.compile(b'^0x[a-fA-F0-9]{40}$')
-max_length = 42
-#p1 = re.compile(b'0x9Ae08d0118E105Dce648A7fBA6fc12b2c3e9c288')
-#m = p.match('0x9Ae08d0118E105Dce648A7fBA6fc12b2c3e9c288')
-#m = p.search(data)
-#print(m) # 내용없음
-#m = re.finditer(p, data)
-#print(m)
+print(path)
 
-with open(a, 'rb') as f, mmap(f.fileno(), 0, access=ACCESS_READ) as mm:
-    #print(mm[0:])
+p = re.compile(rb'^0x[a-fA-F0-9]{40}$', re.DOTALL | re.IGNORECASE | re.MULTILINE)
+
+with open(path, 'rb') as f, mmap(f.fileno(), length=0, access=ACCESS_READ) as mm:
+    #print(mm[0:42])
+    b=type(mm)
+    print(b)
+        
     for match in p.finditer(mm):
-        #if not (match.end() == len(mm) and len(match.group()) < max_length and length == chunk_size):
-        #    matches.append(match.group())
-    #mm.close()
-#f.close()
-        #print("------result------")
-        print(match)
-        #print(match.decode("utf-8"))
+        s = match.start()
+        e = match.end()
+        grep_match_found = mm[s:e].decode("utf-8")
+        print(str(grep_match_found))
+        #g = match.group()
+        #grep_match_found = mm[g].decode("utf-8")
+        print("match_found : ", math.group())
 
-#if m:
-#    print("found a match: ", m.group(1))
-#    print("match offset: ", m.start())
+
