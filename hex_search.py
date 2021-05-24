@@ -14,7 +14,7 @@ except IOError:
 
 print(path)
 
-p = re.compile(rb'^0x[a-fA-F0-9]{40}$', re.DOTALL | re.IGNORECASE | re.MULTILINE)
+p = re.compile(rb'0x[a-fA-F0-9]{40}$', re.DOTALL | re.IGNORECASE | re.MULTILINE)
 
 with open(path, 'rb') as f, mmap(f.fileno(), length=0, access=ACCESS_READ) as mm:
     #print(mm[0:42])
@@ -28,6 +28,6 @@ with open(path, 'rb') as f, mmap(f.fileno(), length=0, access=ACCESS_READ) as mm
         print(str(grep_match_found))
         #g = match.group()
         #grep_match_found = mm[g].decode("utf-8")
-        print("match_found : ", math.group())
+        print("match_found : ", match.group())
 
 
