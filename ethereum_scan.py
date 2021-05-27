@@ -46,4 +46,5 @@ with open(path, 'rb') as f, mmap(f.fileno(), length=0, access=ACCESS_READ) as mm
         #grep_match_found = mm[g].decode("utf-8")
         #print("match_found : ", match.group())
 
-
+f.close()
+mm.close()
