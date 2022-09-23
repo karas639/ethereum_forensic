@@ -5,6 +5,7 @@ import csv
 import datetime
 import requests
 import numpy as np
+import eth_utils
 from mmap import ACCESS_READ, mmap
 from web3.auto import w3
 
@@ -99,7 +100,8 @@ def artifacts():
                     mnemonic_list.append(match_result)
                     try:
                         mnemonic = w3.eth.account.from_mnemonic(match_result)  # 니모닉 코드 입력하여 주소 확인
-                    except ValidationError:
+                    except eth_utils.exceptions.ValidationError:
+                    #except ValidationError:
                         print("error : this is not mnemonic")
                     else:
                         global mnemonic_result
