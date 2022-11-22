@@ -31,11 +31,12 @@ def showmenu():  # 메뉴 선택 함수
     
 def artifacts():
     if sel == 1: #주소, 0x[0-9A-Fa-f]{40,44}
-        p = re.compile(rb'^0x[a-fA-F0-9]{40}', re.IGNORECASE | re.MULTILINE) 
+        p = re.compile(rb'^0x[a-fA-F0-9]{40}', re.IGNORECASE | re.MULTILINE)
     elif sel == 2: #개인키
         p = re.compile(rb'[0-9a-f]{64}', re.IGNORECASE | re.MULTILINE) 
     elif sel == 3: #키스토어
-        p = re.compile(rb'"([address"]*)":"([a-fA-F0-9]{40})","([crypto"]*)":', re.IGNORECASE | re.MULTILINE)
+        #p = re.compile(rb'"([address"]*)":"([a-fA-F0-9]{40})","([crypto"]*)":', re.IGNORECASE | re.MULTILINE)
+        p = re.compile(rb'UTC--[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}.[0-9]{3}Z--[a-fA-F0-9]{40}', re.IGNORECASE | re.MULTILINE)
     elif sel == 4: # 니모닉 코드(12)
         p = re.compile(rb'[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}', re.MULTILINE) # 나모닉 코드 12자리
     elif sel == 5: # 니모닉 코드(24)
