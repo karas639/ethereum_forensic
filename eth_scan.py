@@ -61,14 +61,17 @@ def artifacts():
                     csv_file = 'c:\\temp\\'+f'{nowDate}'+'_ethereum_address_scan_result.csv'
                     headers = {'User-Agent': 'Mozilla/5.0'} # header 선언, http 요청 브라우저는 Mozilla.
                     resp = requests.get(URL).json() # http get 요청을 resp 변수에 json 형태로 선언
+                    #print(resp)
                     for key, value in resp.items():  # apikey error test
-                        if value == "1":
+                        #if value == "1":
+                        if resp["message"] == "OK":
                             print(URL)
-                            global api_result, ts_result, to_result, hx_result
+                            global api_result, ts_result, from_result, to_result, hx_result
                             status = resp["message"]
                             data = resp["result"] # result 결과인 value만 변수에 담기
                             api_result = dict(data[0])
                             ts_result = api_result.get('timeStamp')
+                            from_result = api_result.get('from')
                             to_result = api_result.get('to')
                             hx_result = api_result.get('hash')
                             csv_print()
@@ -123,7 +126,7 @@ def csv_print():
         writer = csv.writer(csvfile)
         #writer.writeheader()
         if sel == 1:
-            writer.writerow([ts_result, to_result, hx_result])
+            writer.writerow([ts_result, from_result, to_result, hx_result])
         elif sel == 2:
             writer.writerow(privatekey_list)
         elif sel == 4:
