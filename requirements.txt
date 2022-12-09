@@ -11,7 +11,7 @@ base58==2.1.1
 beautifulsoup4==4.11.1
 bitarray==2.6.0
 bleach==5.0.1
-certifi==2022.9.24
+certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==2.1.1
 colorama==0.4.6
