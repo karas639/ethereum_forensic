@@ -15,9 +15,11 @@ echo -------------------------------------------------
 echo       python install and pip install       
 echo ------------------------------------------------- 
 
-unzip python-3.12.2-embed-amd64.zip -d python3
+::unzip python-3.12.2-embed-amd64.zip -d python3
 cd python3
-curl -O https://bootstrap.pypa.io/get-pip.py
+::curl -O https://bootstrap.pypa.io/get-pip.py
+::.\python.exe get-pip.py
+
 
 echo ------------------------------------------------- 
 echo          Current Directory       
@@ -29,18 +31,18 @@ echo -------------------------------------------------
 echo          Install pip packages       
 echo ------------------------------------------------- 
 
-pip install --no-index --find-links=..\requirements web3
-pip install --no-index --find-links=..\requirements eth_utils
-pip install --no-index --find-links=..\requirements numpy
-pip install --no-index --find-links=..\requirements urllib3
-pip install --no-index --find-links=..\requirements requests
+.\pip install --no-index --find-links=..\requirements web3
+.\pip install --no-index --find-links=..\requirements eth_utils
+.\pip install --no-index --find-links=..\requirements numpy
+.\pip install --no-index --find-links=..\requirements urllib3
+.\pip install --no-index --find-links=..\requirements requests
 
 echo ------------------------------------------------- 
 echo          memory dump       
 echo ------------------------------------------------- 
 
 
-python ..\eth_scan_v2.py
+.\python ..\eth_scan_v2.py
 
 pause
 
