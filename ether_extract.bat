@@ -31,11 +31,11 @@ echo -------------------------------------------------
 echo          Install pip packages       
 echo ------------------------------------------------- 
 
-.\pip install --no-index --find-links=..\requirements web3
-.\pip install --no-index --find-links=..\requirements eth_utils
-.\pip install --no-index --find-links=..\requirements numpy
-.\pip install --no-index --find-links=..\requirements urllib3
-.\pip install --no-index --find-links=..\requirements requests
+.\scripts\pip install --no-index --find-links=..\requirements web3
+.\scripts\pip install --no-index --find-links=..\requirements eth_utils
+.\scripts\pip install --no-index --find-links=..\requirements numpy
+.\scripts\pip install --no-index --find-links=..\requirements urllib3
+.\scripts\pip install --no-index --find-links=..\requirements requests
 
 echo ------------------------------------------------- 
 echo          memory dump       
