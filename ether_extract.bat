@@ -15,7 +15,7 @@ echo -------------------------------------------------
 echo       python install and pip install       
 echo ------------------------------------------------- 
 
-unzip python-3.11.9.zip -d python3
+unzip python-3.12.2-embed-amd64.zip -d python3
 cd python3
 curl -O https://bootstrap.pypa.io/get-pip.py
 
