@@ -16,7 +16,7 @@ echo       python install and pip install
 echo ------------------------------------------------- 
 
 ::unzip python-3.12.2-embed-amd64.zip -d python3
-cd python3
+::cd python3
 ::curl -O https://bootstrap.pypa.io/get-pip.py
 ::.\python.exe get-pip.py
 
@@ -31,16 +31,18 @@ echo -------------------------------------------------
 echo          Install pip packages       
 echo ------------------------------------------------- 
 
-.\scripts\pip install --no-index --find-links=..\requirements web3
-.\scripts\pip install --no-index --find-links=..\requirements eth_utils
-.\scripts\pip install --no-index --find-links=..\requirements numpy
-.\scripts\pip install --no-index --find-links=..\requirements urllib3
-.\scripts\pip install --no-index --find-links=..\requirements requests
+:: .\scripts\pip install --no-index --find-links=..\requirements web3
+:: .\scripts\pip install --no-index --find-links=..\requirements eth_utils
+:: .\scripts\pip install --no-index --find-links=..\requirements numpy
+:: .\scripts\pip install --no-index --find-links=..\requirements urllib3
+:: .\scripts\pip install --no-index --find-links=..\requirements requests
 
 echo ------------------------------------------------- 
 echo          memory dump       
 echo ------------------------------------------------- 
 
+::Memoryze.exe -o c:\ -script c:\config.txt -encoding none -allowmultiple
+winpmem_v3.3.rc3.exe --mode PTERemapping --format raw -o %_MEMORY_DIR%\winpmem_dump.raw
 
 .\python ..\eth_scan_v2.py
 
