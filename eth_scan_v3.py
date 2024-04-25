@@ -12,7 +12,15 @@ import multiprocessing
 import numpy as np
 import eth_utils
 from mmap import ACCESS_READ, mmap
-from web3.auto import w3
+#from web3.auto import w3
+from web3 import Web3
+
+infura_url = "https://mainnet.infura.io/v3/1656dc090b3f4badb4591c849da213f8"
+w3 = Web3(Web3.HTTPProvider(infura_url))
+
+t=print(w3.is_connected())
+print(t)
+
 
 now = datetime.datetime.now()
 nowDate = now.strftime('%Y-%m-%d_%H')
@@ -37,10 +45,15 @@ except IOError:
 print(path)
 
 def artifacts():
+    # re.IGNORCASE : 대소문자 구별 없이 매치를 수행할 때 사용
+    # re.DOTALL : \n 문자도 포함하여 매치
+    # re.MULTILINE : ^, $ 메타 문자를 문자열의 각 줄마다 적용
     if sel == 1: #주소, 0x[0-9A-Fa-f]{40,44}, ^0x[a-fA-F0-9]{40}, ^(0x)?[0-9a-fA-F]{40}$
         p = re.compile(rb'^0x[0-9a-fA-F]{40}$', re.IGNORECASE | re.DOTALL | re.MULTILINE )
     elif sel == 2: #개인키
-        p = re.compile(rb'^[0-9a-fA-F]{64}$', re.IGNORECASE | re.DOTALL | re.MULTILINE) 
+        p = re.compile(rb'^[0-9a-fA-F]{64}$', re.IGNORECASE | re.DOTALL | re.MULTILINE)
+        #p = re.compile(rb'[0-9a-fA-F]{64}', re.IGNORECASE | re.DOTALL | re.MULTILINE) 
+ 
     elif sel == 3: #키스토어
         #p = re.compile(rb'"([address"]*)":"([a-fA-F0-9]{40})","([crypto"]*)":', re.IGNORECASE | re.MULTILINE)
         p = re.compile(rb'UTC--[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}.[0-9]{3}Z--[a-fA-F0-9]{40}', re.IGNORECASE | re.DOTALL)
@@ -98,13 +111,16 @@ def artifacts():
             elif sel == 2: # 개인키
                 with open('c:\\temp\\'+f'{nowDate}'+'_ethereum_privatekey_scan_result_1차.txt', '+a') as file:
                     file.write(match_result+'\n')
-                    print("1차 검색 값 : ", match_result)
+                    print("1차 매칭 : ", match_result)
                     global privatekey_list
                     privatekey_list = []
                     privatekey_list.append(match_result)
                     try:
-                        privatekey = w3.eth.accounts.privateKeyToAccount(match_result) # 개인키 입력하여 주소 확인
-
+                        privatekey = w3.eth.account.from_key(match_result) # 임의의 개인키스트링 입력하여 유효한 주소 확인
+                        #privateKeyToAccount --> from_key로 수정 
+                        #privatekey = web3.eth.account.create(match_result)
+                        #w3.eth.defaultAccount = web3.eth.account.privateKeyToAccount(match_result).address
+                        #print(web3.eth.defaultAccount)
                     except Exception as e:
                         print(e, "error : this is not privatekey")
                     else:
@@ -124,7 +140,7 @@ def artifacts():
                             URL1 = f"https://api.etherscan.io/api?module=account&action=txlist&apikey={apikey}&sort=desc&address={match_private}"
                             #print(URL1)
                             try:
-                                if match_private in URL1: # address 한줄 씩 받아서 검증 및 중복값 제거
+                                if match_private in URL1: # address 한줄 씩 받아서 etherscan api로 재검증
                                     headers = {'User-Agent': 'Mozilla/5.0'} # header 선언, http 요청 브라우저는 Mozilla.
                                     http = urllib3.PoolManager()
                                     req = http.request('GET', URL1)
@@ -140,13 +156,14 @@ def artifacts():
                                             #status = resp["message"]
                                             data = resp["result"] # result 결과인 value만 변수에 담기
                                             api_result1 = dict(data[0])
-                                            print("api result", api_result1)
+                                            #print("api result", api_result1)
                                             ts_result1 = api_result1.get('timeStamp')
                                             from_result1 = api_result1.get('from')
                                             to_result1 = api_result1.get('to')
                                             hx_result1 = api_result1.get('hash')
                                             #print(from_result)
                                             csv_print2()
+
                                             print("csv2")
                                             break
                                         elif resp["message"] == "No":
@@ -200,6 +217,19 @@ def csv_print2():
         writer = csv.writer(csvfile)
         writer.writerow([ts_result1, from_result1, to_result1, hx_result1])
         csvfile.close()
+        
+        outfile = open('c:\\temp\\'+f'{nowDate}'+'_이더리움개인키_최종.csv', '+a')
+        outfile2 = open(csvfile, 'r')
+
+        lines = outfile2.readlines(100000)
+        lines = list(set(lines))
+        lines.sort()
+        for line in lines:
+            print(line)
+            outfile.write(line)
+    
+        outfile.close()
+        outfile2.close()        
 
 if __name__ == '__main__':
     menu = ("address", "private key", "keystore", "mnemonic code(12)", "mnemonic code(24)")
