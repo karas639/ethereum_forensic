@@ -59,8 +59,8 @@ def artifacts():
         p = re.compile(rb'UTC--[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}.[0-9]{3}Z--[a-fA-F0-9]{40}', re.IGNORECASE | re.DOTALL)
     elif sel == 4: # 니모닉 코드(12)
         p = re.compile(rb'[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}', re.IGNORECASE | re.DOTALL) # 나모닉 코드 12자리
-    elif sel == 5: # 니모닉 코드(24)
-        p = re.compile(rb'[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}', re.IGNORECASE | re.MULTILINE) # 나모닉 코드 24자리
+    #elif sel == 5: # 니모닉 코드(24)
+    #    p = re.compile(rb'[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}\s[a-z]{3,8}', re.IGNORECASE | re.MULTILINE) # 나모닉 코드 24자리
     else:
         print("another artifacts?")
    
@@ -194,9 +194,9 @@ def artifacts():
                         csv_file = 'c:\\temp\\'+f'{nowDate}'+'_ethereum_mnemonic_scan_result_2차.csv'
                         csv_print()
                     file.close()
-            elif sel == 5 and len(match_result.split()) == 24: # 니모닉 코드(24)
-                file.write(match_result+'\n')
-                file.close()
+            #elif sel == 5 and len(match_result.split()) == 24: # 니모닉 코드(24)
+            #    file.write(match_result+'\n')
+            #    file.close()
         mm.close()
         
 def csv_print():
@@ -232,7 +232,8 @@ def csv_print2():
         outfile2.close()        
 
 if __name__ == '__main__':
-    menu = ("address", "private key", "keystore", "mnemonic code(12)", "mnemonic code(24)")
+    #menu = ("address", "private key", "keystore", "mnemonic code(12)", "mnemonic code(24)")
+    menu = ("address", "private key", "keystore", "mnemonic code(12)")
     while True:
         showmenu()
         sel = int(input("Choose Menu number (Exit 0) : "))
